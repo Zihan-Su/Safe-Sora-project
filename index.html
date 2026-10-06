@@ -1,186 +1,40 @@
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Safe-Sora</title>
-<link rel="icon" type="image/png" href="static/images/favicon.png">
-<link href="style.css" rel="stylesheet">
-</head>
-
-
-<body>
-<div class="content">
-  <h1 style="font-weight: 900;"><strong><img src="fig/logo.png" style="height: 100px;"> <br>Safe Text-to-Video Generation <br>via Graphical Watermarking</strong> </h1>
-  <!-- <h1><span><img src="src/img/pia.png" style="height: 72px;"></span><strong> :Your Personalized Image Animator <br> via Plug-and-Play Modules in Text-to-Image Models</strong></h1> -->
-  <p id="authors"><a href="https://github.com/Zihan-Su">Zihan Su<sup>1</sup></a> <a href="https://scholar.google.com/citations?user=bMwW4e8AAAAJ&hl=zh-CN">Xuerui Qiu<sup>2</sup></a> <a href="https://scholar.google.com/citations?hl=zh-CN&user=mRC_emoAAAAJ">Hongbin Xu<sup>3</sup></a> <a href="https://dblp.org/pid/369/7675.html">Tangyu Jiang<sup> 1</sup></a> <a href="https://scholar.google.co.in/citations?user=J3olRccAAAAJ&hl=en">Junhao Zhuang<sup> 1</sup></a> <br> <a href="https://scholar.google.com/citations?hl=en&amp;user=fYdxi2sAAAAJ">Chun Yuan<sup>1 †</sup></a> <a href="https://scholar.google.com/citations?user=2wySPkcAAAAJ&hl=zh-CN">Ming Li<sup>4 † </sup></a> <a href="https://scholar.google.com/citations?user=rBWnK8wAAAAJ&hl=en">Shengfeng He<sup>5</sup></a> <a href="https://dblp.org/pid/16/6654.html">Fei Richard Yu<sup>4</sup></a>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Safe Text-to-Video Generation via Graphical Watermarking"><title>Safe-Sora — Safe Text-to-Video Generation via Graphical Watermarking</title><link rel="icon" href="fig/logo.png"><link rel="stylesheet" href="preview.css"><link rel="stylesheet" href="reference.css"></head><body class="safe-sora"><a href="#overview" class="skip">Skip to content</a><nav class="nav"><a class="brand" href="#"><span class="brand-symbol">◇</span>Safe-Sora</a><div class="nav-links"><a href="#overview">Overview</a><a href="#method">Method</a><a href="#results">Results</a><a href="#citation">Citation</a></div><a class="nav-paper" href="https://arxiv.org/abs/2505.12667" target="_blank" rel="noopener">Paper ↗</a></nav><main><header class="hero"><div class="hero-meta"><span class="venue">NeurIPS 2025</span><span>Generative video watermarking</span></div><h1><span>Safe-Sora:</span> Safe Text-to-Video Generation<br> via Graphical Watermarking</h1><p class="hero-summary">Graphical watermarks embedded during generation.<br> From adaptive matching to watermark recovery.</p><div class="authors"><a href="https://github.com/Zihan-Su">Zihan Su<sup>1</sup></a> <a href="https://scholar.google.com/citations?user=bMwW4e8AAAAJ&hl=zh-CN">Xuerui Qiu<sup>2</sup></a> <a href="https://scholar.google.com/citations?hl=zh-CN&user=mRC_emoAAAAJ">Hongbin Xu<sup>3</sup></a> <a href="https://dblp.org/pid/369/7675.html">Tangyu Jiang<sup> 1</sup></a> <a href="https://scholar.google.co.in/citations?user=J3olRccAAAAJ&hl=en">Junhao Zhuang<sup> 1</sup></a> <br> <a href="https://scholar.google.com/citations?hl=en&amp;user=fYdxi2sAAAAJ">Chun Yuan<sup>1 †</sup></a> <a href="https://scholar.google.com/citations?user=2wySPkcAAAAJ&hl=zh-CN">Ming Li<sup>4 † </sup></a> <a href="https://scholar.google.com/citations?user=rBWnK8wAAAAJ&hl=en">Shengfeng He<sup>5</sup></a> <a href="https://dblp.org/pid/16/6654.html">Fei Richard Yu<sup>4</sup></a>
 
     
-    <span style="font-size: 16px"><br>
+    <span class="author-affiliations"><br>
         <sup>1</sup> Tsinghua University <sup>2</sup> Institute of Automation, Chinese Academy of Sciences <br>
         <sup>3</sup> South China University of Technology <br>
         <sup>4</sup> Guangdong Laboratory of Artificial Intelligence and Digital Economy (SZ) <br>
         <sup>5</sup> Singapore Management University <br>
         
         <sup>†</sup>Corresponding Author</span>
-        </p>
-
-        <!-- <div style="text-align: center;">
-          <a target="_blank" href="https://www.tsinghua.edu.cn/">
-          <img src="fig/thu.png" alt="Institution 1" style="width: auto; height: 70px; margin-right: 20px;"></a>
-          <a target="_blank" href="https://arc.tencent.com/zh/index">
-          <img src="fig/ARC.png" alt="Institution 2" style="width: auto; height: 70px;"></a>
-        </div> -->
-
-        <style>
-          /* 定义一个名为.link-button的类，用于样式化链接按钮 */
-          .link-button {
-            display: inline-block; /* 使元素以内联块的形式显示 */
-            padding: 6px 10px; /* 内边距，垂直8px，水平16px */
-            margin: 8px; /* 外边距，四周均为4px */
-            border: 2px solid #007bff; /* 边框，宽度1px，样式实线，颜色#007bff */
-            border-radius: 7px; /* 边框圆角，半径5px */
-            text-decoration: none; /* 移除文本装饰（如下划线） */
-            font-weight: bold; /* 字体加粗 */
-            color: #007bff; /* 文字颜色 */
-            transition: background-color 0.3s, color 0.3s; /* 背景颜色和文字颜色的过渡效果，持续时间0.3秒 */
-          }
-          /* 当鼠标悬停在.link-button上时的样式 */
-          .link-button:hover {
-            background-color: #007bff; /* 背景颜色 */
-            color: white; /* 文字颜色 */
-          }
-          /* 定义.link-button内部的i标签样式 */
-          .link-button i {
-            margin-right: 8px; /* 右外边距，8px */
-          }
-        </style>
-        
-        <div style="text-align: center;">
-          <a href="https://arxiv.org/abs/2505.12667" target="_blank" class="link-button">
-            <i class="fas fa-file-alt"></i> <img src="fig/arxiv.png" alt="arxiv", style="width: 16px;"> Paper</a>
-          <a href="https://github.com/Zihan-Su/Safe-Sora" target="_blank" class="link-button">
-            <i class="fab fa-github"></i> <img src="fig/github.png" alt="github", style="width: 16px;"> Code</a>
-        </div>
-
-    
-
-        <div style="text-align: center;">
-          <p>
+        </div><div class="actions"><a class="button primary" href="https://arxiv.org/abs/2505.12667" target="_blank" rel="noopener">Paper <span>↗</span></a><a class="button" href="https://github.com/Zihan-Su/Safe-Sora" target="_blank" rel="noopener">Code <span>↗</span></a><a class="text-link" href="#results">Explore results ↓</a></div><div class="highlights"><div><strong>Match</strong><p>Coarse to fine</p><small>Adaptive patch matching</small></div><div><strong>Embed</strong><p>Spatiotemporal fusion</p><small>3D wavelet-enhanced Mamba</small></div><div><strong>Recover</strong><p>Watermark extraction</p><small>Reconstruction under distortions</small></div></div></header><div class="feature demo"><div class="feature-label"><span>Video + graphical watermark</span><span>Interactive examples</span></div><h2>Create. Protect. Recover.</h2><p>Graphical watermarks, embedded during generation.</p><div class="example-tabs" role="tablist" aria-label="Video example"><button role="tab" aria-selected="true" data-example="0">Example 01</button><button role="tab" aria-selected="false" data-example="1">Example 02</button><button role="tab" aria-selected="false" data-example="2">Example 03</button><button role="tab" aria-selected="false" data-example="3">Example 04</button></div><div class="demo-columns"><div><div class="triplet"><span>Original</span><span>Watermarked</span><span>Difference ×5</span></div><video id="demo-video" controls muted loop playsinline preload="metadata" src="fig/0_cover_combined.mp4"></video><span class="media-caption">Generated video comparison</span></div><div><div class="triplet"><span>Original watermark</span><span>Recovered watermark</span><span>Difference ×5</span></div><img id="demo-watermark" src="fig/0_secret_combined.png" alt="Original watermark, recovered watermark and difference magnified five times"><span class="media-caption">Watermark reconstruction</span></div></div><p class="demo-note">
             <b>Safe-Sora</b> is the first framework that integrates graphical watermarks directly into the video generation process.
             The following results show the original video, the watermarked video, the difference between them (×5), the original watermark, the recovered watermark, and the difference between them (×5).
-          </p>
-        
-          <div style="display: flex; justify-content: center; align-items: center; gap: 10px; flex-wrap: wrap;">
-            <!-- 视频 -->
-            <video height="125" style="height: 125px; width: auto;" controls>
-              <source src="fig/0_cover_combined.mp4" type="video/mp4">
-              Your browser does not support the video tag.
-            </video>
-        
-            <!-- 图片 -->
-            <img src="fig/0_secret_combined.png" alt="demo image" style="height: 125px; width: auto; object-fit: contain;">
-          </div>
-
-          <br>
-          <div style="display: flex; justify-content: center; align-items: center; gap: 10px; flex-wrap: wrap;">
-            <!-- 视频 -->
-            <video height="125" style="height: 125px; width: auto;" controls>
-              <source src="fig/1_cover_combined.mp4" type="video/mp4">
-              Your browser does not support the video tag.
-            </video>
-        
-            <!-- 图片 -->
-            <img src="fig/1_secret_combined.png" alt="demo image" style="height: 125px; width: auto; object-fit: contain;">
-          </div>
-
-          <br>
-          <div style="display: flex; justify-content: center; align-items: center; gap: 10px; flex-wrap: wrap;">
-            <!-- 视频 -->
-            <video height="125" style="height: 125px; width: auto;" controls>
-              <source src="fig/2_cover_combined.mp4" type="video/mp4">
-              Your browser does not support the video tag.
-            </video>
-        
-            <!-- 图片 -->
-            <img src="fig/2_secret_combined.png" alt="demo image" style="height: 125px; width: auto; object-fit: contain;">
-          </div>
-          
-          <br>
-          <div style="display: flex; justify-content: center; align-items: center; gap: 10px; flex-wrap: wrap;">
-            <!-- 视频 -->
-            <video height="125" style="height: 125px; width: auto;" controls>
-              <source src="fig/3_cover_combined.mp4" type="video/mp4">
-              Your browser does not support the video tag.
-            </video>
-        
-            <!-- 图片 -->
-            <img src="fig/3_secret_combined.png" alt="demo image" style="height: 125px; width: auto; object-fit: contain;">
-          </div>
-        </div>
-
-</div>
-
-
-<div class="content">
-  <h2 style="text-align:center;"><strong>Abstract</strong></h2>
-  <p>The explosive growth of generative video models has amplified the demand for reliable copyright preservation of AI-generated content. Despite its popularity in image synthesis, invisible generative watermarking remains largely underexplored in video generation. To address this gap, we propose <strong>Safe-Sora</strong>, the first framework to embed graphical watermarks directly into the video generation process. Motivated by the observation that watermarking performance is closely tied to the visual similarity between the watermark and cover content, we introduce a hierarchical <strong>coarse-to-fine adaptive matching mechanism</strong>. Specifically, the watermark image is divided into patches, each assigned to the most visually similar video frame, and further localized to the optimal spatial region for seamless embedding. To enable spatiotemporal fusion of watermark patches across video frames, we develop a 3D wavelet transform-enhanced Mamba architecture with a novel <strong>spatiotemporal local scanning strategy</strong>, effectively modeling long-range dependencies during watermark embedding and retrieval. To the best of our knowledge, this is the first attempt to apply state space models to watermarking, opening new avenues for efficient and robust watermark protection. Extensive experiments demonstrate that <strong>Safe-Sora</strong> achieves state-of-the-art performance in terms of video quality, watermark fidelity, and robustness, which is largely attributed to our proposals. </p>
-    <img src="fig/Application.png" class="teaser-gif" style="width:100%;">
-  </div>
-
-
-<div class="content">
-    <h2 style="text-align:center;"><strong>Method</strong></h2>
-    <p><b>Overview of our Safe-Sora framework.</b> Our method consists of three main components: 
+          </p></div><section id="overview" class="section"><header class="section-heading"><span class="idea-label">The idea</span><div><h2>Watermark protection,<br>built into generation.</h2></div></header><div class="abstract"><p>AI-generated videos need reliable copyright protection. Embedding an invisible graphical watermark requires preserving both video quality and the recoverability of the watermark.</p><p><strong>Safe-Sora embeds graphical watermarks directly during video generation.</strong> Adaptive patch matching aligns watermark content with video regions, while wavelet-enhanced Mamba supports embedding and recovery across frames.</p><a class="abstract-link" href="https://arxiv.org/abs/2505.12667" target="_blank" rel="noopener">Read the full abstract ↗</a></div><figure class="figure "><button class="expand" aria-label="Enlarge figure" title="Enlarge figure">↗</button><img src="fig/Application.png" alt="Graphical watermark embedding and identification." loading="lazy"><figcaption>Graphical watermark embedding and identification.</figcaption></figure></section><section id="method" class="section"><header class="section-heading"><span class="section-index">02</span><div><h2>From adaptive matching to recovery</h2></div></header><figure class="figure "><button class="expand" aria-label="Enlarge figure" title="Enlarge figure">↗</button><img src="fig/pipeline.png" alt="Overview of our Safe-Sora framework. Our method consists of three main components: 
+      (1) Coarse-to-Fine Adaptive Patch Matching: partitioning the watermark image into patches " loading="lazy"><figcaption><b>Overview of our Safe-Sora framework.</b> Our method consists of three main components: 
       (1) Coarse-to-Fine Adaptive Patch Matching: partitioning the watermark image into patches and optimally assigning them to appropriate video frames and regions, followed by patch embedding and upsampling to generate the watermark feature map; 
       (2) Watermark Embedding: the watermark feature map is fused with multi-scale video features via a UNet with 2D SFMamba blocks, followed by a series of 3D SFMamba blocks that implement our spatiotemporal local scanning strategy, to produce the watermarked video; 
-      (3) Watermark Extraction: recovering the embedded watermark using an extraction network built with a distortion layer, a series of 3D SFMamba blocks, and position recovery.</p>
-    <br>
-    <img class="summary-img" src="fig/pipeline.png" style="width:100%;"> <br>
-    <p><b>Spatiotemporal local scanning strategy.</b> For 3D frequency scanning, we propose a spatiotemporal local scanning strategy for 3D wavelet transform, which processes the frequency components hierarchically from low frequency to high frequency and high frequency to low frequency.</p>
-    <img class="summary-img" src="fig/Scanning.png" style="width:100%;"> <br>
-  </div>
-
-  <div class="content">
-    <h2 style="text-align:center;"><strong>Results</strong></h2>
-  
-    <img src="fig/Comparison.png" class="teaser-gif" style="width:100%;">
-    <p style="font-size: 19px; font-style: italic; text-align: left;">
+      (3) Watermark Extraction: recovering the embedded watermark using an extraction network built with a distortion layer, a series of 3D SFMamba blocks, and position recovery.</figcaption></figure><figure class="figure "><button class="expand" aria-label="Enlarge figure" title="Enlarge figure">↗</button><img src="fig/Scanning.png" alt="Spatiotemporal local scanning strategy. For 3D frequency scanning, we propose a spatiotemporal local scanning strategy for 3D wavelet transform, which processes the frequency compo" loading="lazy"><figcaption><b>Spatiotemporal local scanning strategy.</b> For 3D frequency scanning, we propose a spatiotemporal local scanning strategy for 3D wavelet transform, which processes the frequency components hierarchically from low frequency to high frequency and high frequency to low frequency.</figcaption></figure></section><section id="results" class="section"><header class="section-heading"><span class="section-index">03</span><div><h2>Quality, fidelity, and robustness</h2></div></header><div class="tabs" role="tablist" aria-label="Result category"><button role="tab" aria-selected="true" data-panel="qualitative">Qualitative comparison</button><button role="tab" aria-selected="false" data-panel="quantitative">Quantitative results</button><button role="tab" aria-selected="false" data-panel="robustness">Robustness</button></div><div id="qualitative" role="tabpanel"><figure class="figure "><button class="expand" aria-label="Enlarge figure" title="Enlarge figure">↗</button><img src="fig/Comparison.png" alt="
+      Qualitative comparison results.
+      Difference maps show absolute differences between the watermarked and original videos, and between the recovered and original watermark" loading="lazy"><figcaption>
       <b>Qualitative comparison results.</b>
       Difference maps show absolute differences between the watermarked and original videos, and between the recovered and original watermarks.
-    </p>
-    <br>
-  
-    <img src="fig/result.png" class="teaser-gif" style="width:100%;">
-    <p style="font-size: 19px; font-style: italic; text-align: left;">
+    </figcaption></figure></div><div id="quantitative" role="tabpanel" hidden><figure class="figure "><button class="expand" aria-label="Enlarge figure" title="Enlarge figure">↗</button><img src="fig/result.png" alt="
+      Quantitative results on watermark quality and video quality metrics. Watermark quality is
+      measured by comparing the recovered watermark image with the original waterma" loading="lazy"><figcaption>
       <b>Quantitative results on watermark quality and video quality metrics.</b> Watermark quality is
       measured by comparing the recovered watermark image with the original watermark, while video
       quality is evaluated by comparing the watermarked video with the original video.
-    </p>
-    <br>
-  
-    <img src="fig/Robustness.png" class="teaser-gif" style="width:100%;">
-    <p style="font-size: 19px; font-style: italic; text-align: left;">
+    </figcaption></figure></div><div id="robustness" role="tabpanel" hidden><figure class="figure "><button class="expand" aria-label="Enlarge figure" title="Enlarge figure">↗</button><img src="fig/Robustness.png" alt="
+      Watermark reconstruction quality under various distortions. Distortion settings include:
+      Random Erasing (5%–20%), Gaussian Blur (kernel size 3/5/7), Gaussian Noise (σ " loading="lazy"><figcaption>
       <b>Watermark reconstruction quality under various distortions. </b>Distortion settings include:
       Random Erasing (5%–20%), Gaussian Blur (kernel size 3/5/7), Gaussian Noise (σ ∼ U(0, 0.2)),
       Rotation (-30°, 30°), and H.264 Compression (CRF = 24).
-    </p>
-    <br>
-  </div>
-  
-
-
-
-<div class="content">
-  <h2 style="text-align:center;"><strong>BibTex</strong></h2>
-  <pre><code>@misc{su2025safesorasafetexttovideogeneration,
-  title={Safe-Sora: Safe Text-to-Video Generation via Graphical Watermarking}, 
-  author={Zihan Su and Xuerui Qiu and Hongbin Xu and Tangyu Jiang and Junhao Zhuang and Chun Yuan and Ming Li 
-          and Shengfeng He and Fei Richard Yu},
-  year={2025},
-  eprint={2505.12667},
-  archivePrefix={arXiv},
-  primaryClass={cs.CV},
-  url={https://arxiv.org/abs/2505.12667}, 
-}</code></pre>
-</div>
-
-
-</html>
+    </figcaption></figure></div></section><section id="citation" class="section"><header class="section-heading"><span class="section-index">04</span><div><h2>Cite this work</h2></div></header><div class="citation"><button id="copy-citation" class="copy">Copy BibTeX</button><pre><code>@article{su2025safe,
+  title={Safe-Sora: Safe Text-to-Video Generation via Graphical Watermarking},
+  author={Su, Zihan and Qiu, Xuerui and Xu, Hongbin and Jiang, Tangyu and Zhuang, Junhao and Yuan, Chun and Li, Ming and He, Shengfeng and Yu, Fei Richard},
+  journal={arXiv preprint arXiv:2505.12667},
+  year={2025}
+}</code></pre><span id="copy-status" role="status"></span></div></section></main><footer><a class="footer-brand" href="#">Safe-Sora <span>↑</span></a><p>NeurIPS 2025 · <a href="https://zihan-su.github.io/">Zihan Su</a></p><a href="https://zihan-su.github.io/">Zihan Su’s homepage ↗</a></footer><dialog id="lightbox"><button id="close-lightbox" aria-label="Close enlarged figure">Close ×</button><img alt="Enlarged paper figure"></dialog><script src="preview.js"></script></body></html>
